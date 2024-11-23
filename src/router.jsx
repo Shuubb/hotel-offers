@@ -49,9 +49,7 @@ export default createBrowserRouter([
                                         body: JSON.stringify({ expression: `tags=cityGEO-${city}` }),
                                     }
                                 );
-                                console.log(JSON.stringify({ expression: `tags=cityGEO-${city}` }));
                                 const { resources } = await res.json();
-                                console.log(resources);
 
                                 cityData[city] = resources.map((resource) => resource.public_id);
                             })

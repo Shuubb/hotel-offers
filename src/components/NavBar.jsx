@@ -2,7 +2,6 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { useLoaderData } from "react-router-dom";
 import Flag from "react-world-flags";
 
 export default function NavBar({ language, setLanguage }) {
