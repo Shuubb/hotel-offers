@@ -9,7 +9,7 @@ export default function CarouselProvider({ bannerImages }) {
                 width: "100%",
                 height: "50vh",
                 backgroundImage: `url(https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${id}/public)`,
-                backgroundSize: "contain",
+                backgroundSize: "cover",
                 backgroundPosition: "center",
                 cursor: "pointer",
             }}

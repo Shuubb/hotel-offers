@@ -11,7 +11,8 @@ function renderCarousel(main_id, extraImages) {
                 <Carousel.Item key={id + index}>
                     <div
                         style={{
-                            height: "220px",
+                            width: "100%",
+                            aspectRatio: "3/2",
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundImage: `url(https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${id}/public)`,
@@ -24,7 +25,6 @@ function renderCarousel(main_id, extraImages) {
     );
 }
 
-// Main PostCardProvider Component
 export default function PostCardProvider({ data, modal = true }) {
     const { language } = useOutletContext();
 
