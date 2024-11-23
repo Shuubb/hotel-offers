@@ -39,7 +39,7 @@ export default function PostCardProvider({ public_id, modal = true }) {
     useEffect(() => {
         const fetchPostData = async () => {
             try {
-                const url = `/api/resources/image/upload/${public_id}`;
+                const url = `https://cloudinaryapi.shubitidzed9.workers.dev/resources/image/upload/${public_id}`;
                 const response = await fetch(url, {
                     headers: {
                         "Content-Type": "application/json",

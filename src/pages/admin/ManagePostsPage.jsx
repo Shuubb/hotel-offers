@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 // Constants
 const AUTH_HEADER = `Basic ${btoa("318134288265838:cwzTqFWcZrsZx4OZdcPsZupW-1k")}`;
-const API_URL = "/api/resources";
+const API_URL = "https://cloudinaryapi.shubitidzed9.workers.dev/resources";
 
 // Helper functions
 const fetchResources = async () => {
@@ -138,7 +138,7 @@ function PostRow({ post }) {
                                     className="m-2"
                                     onClick={() => {
                                         fetch(
-                                            `/api/resources/image/upload?public_ids=${[
+                                            `https://cloudinaryapi.shubitidzed9.workers.dev/resources/image/upload?public_ids=${[
                                                 ...extraImages,
                                                 post.public_id,
                                             ].join()}`,

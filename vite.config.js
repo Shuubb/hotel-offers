@@ -15,7 +15,7 @@ export default defineConfig({
         port: "5173",
         proxy: {
             "/api": {
-                target: "https://api.cloudinary.com/v1_1/dmltpftir/",
+                target: "https://cloudinaryapi.shubitidzed9.workers.dev/",
                 changeOrigin: true,
                 secure: false,
                 rewrite: (path) => path.replace(/^\/api/, ""),
@@ -25,7 +25,6 @@ export default defineConfig({
                     });
 
                     proxy.on("proxyReq", (proxyReq, req, _res) => {
-                        // Log the final requested URL
                         const targetUrl = proxyReq.getHeader("host");
                         const finalUrl = `${targetUrl}${req.url}`;
                         console.log("Final URL being requested:", finalUrl);

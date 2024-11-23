@@ -24,17 +24,15 @@ export default function LandingPage() {
     const [resultsAreLoading, setResultsAreLoading] = useState(false);
     console.log(language);
 
-    const authHeader = `Basic ${btoa("318134288265838:cwzTqFWcZrsZx4OZdcPsZupW-1k")}`;
-
     const handleSearchTagChange = async (e) => {
         const value = e.target.value;
         if (!value) return;
 
         setOptionsAreLoading(true);
         try {
-            const res = await fetch(`/api/tags/image?prefix=city${language}-"${value}`, {
-                headers: { Authorization: authHeader },
-            });
+            const res = await fetch(
+                `https://cloudinaryapi.shubitidzed9.workers.dev/tags/image?prefix=city${language}-"${value}`
+            );
             const { tags } = await res.json();
             setSearchTags(tags);
         } catch (error) {
@@ -52,11 +50,10 @@ export default function LandingPage() {
 
         setResultsAreLoading(true);
         try {
-            const res = await fetch("/api/resources/search", {
+            const res = await fetch("https://cloudinaryapi.shubitidzed9.workers.dev/resources/search", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: authHeader,
                 },
                 body: JSON.stringify({ expression: `tags=${selectedValues.join()}` }),
             });

@@ -5,6 +5,7 @@ import AdminLayout from "./layouts/admin/AdminLayout";
 import ManagePostsPage from "./pages/admin/ManagePostsPage";
 import AnalyticsPage from "./pages/admin/AnalyticsPage";
 import ManageProfiles from "./pages/admin/ManageProfiles";
+import { expression } from "@cloudinary/url-gen/qualifiers/expression";
 
 export default createBrowserRouter([
     {
@@ -15,14 +16,11 @@ export default createBrowserRouter([
                 path: "",
                 element: <LandingPage />,
                 loader: async () => {
-                    const authHeader = `Basic ${btoa("318134288265838:cwzTqFWcZrsZx4OZdcPsZupW-1k")}`;
-
                     const fetchBanners = async () => {
-                        const res = await fetch("/api/resources/search", {
+                        const res = await fetch("https://cloudinaryapi.shubitidzed9.workers.dev/resources/search", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
-                                Authorization: authHeader,
                             },
                             body: JSON.stringify({ expression: `tags=banner-"true"` }),
                         });
@@ -31,25 +29,30 @@ export default createBrowserRouter([
                     };
 
                     const fetchCities = async () => {
-                        const res = await fetch("/api/tags/image?prefix=cityGEO-", {
-                            headers: { Authorization: authHeader },
-                        });
+                        const res = await fetch(
+                            "https://cloudinaryapi.shubitidzed9.workers.dev/tags/image?prefix=cityGEO-"
+                        );
                         const { tags } = await res.json();
-                        console.log(tags);
                         const cityData = {};
 
                         await Promise.all(
                             tags.map(async (tag) => {
                                 const city = tag.split("-")[1];
-                                const formData = new FormData();
-                                formData.append("expression", `tags=cityGEO-${city}`);
 
-                                const res = await fetch("/api/resources/search", {
-                                    method: "POST",
-                                    headers: { Authorization: authHeader },
-                                    body: formData,
-                                });
+                                const res = await fetch(
+                                    "https://cloudinaryapi.shubitidzed9.workers.dev/resources/search",
+                                    {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        },
+                                        body: JSON.stringify({ expression: `tags=cityGEO-${city}` }),
+                                    }
+                                );
+                                console.log(JSON.stringify({ expression: `tags=cityGEO-${city}` }));
                                 const { resources } = await res.json();
+                                console.log(resources);
+
                                 cityData[city] = resources.map((resource) => resource.public_id);
                             })
                         );
