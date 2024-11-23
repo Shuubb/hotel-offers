@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Chewy&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Georgian:wght@100..900&display=swap");
+
+html {
+    overscroll-behavior: none;
+    max-width: 100dvw;
+    overflow-x: hidden;
+}
+
+* {
+    font-family: "Montserrat", "Noto Sans Georgian", sans-serif;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 1000ms;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 300ms;
+}
+
+#photo-editor-modal {
+    * {
+        color: black !important;
+        stroke: black !important;
+    }
+    #canvas {
+        object-fit: cover;
+        border-radius: 10px;
+    }
+}
+
+.logo {
+    font-family: "Chewy";
+    font-size: 28px !important;
+    letter-spacing: 1px;
+    color: #8d493a !important;
+    border: 2px solid #8d493a;
+    border-radius: 20px;
+    line-height: 1;
+    padding: 12px;
+    transition: 300ms;
+    will-change: color, background-color;
+    &:hover {
+        color: white !important;
+        background-color: #8d493a;
+    }
+}
+
+.head-div {
+    padding: 0 !important;
+    align-items: center;
+    justify-content: space-around !important;
+}
+.shadow-hover {
+    transition: box-shadow 0.3s;
+    &:hover {
+        box-shadow: 0 0 1rem rgba(#8d493a, 0.3) !important;
+    }
+}
+
+.pointer {
+    user-select: none;
+    cursor: pointer;
+}
+
+.cursor-default {
+    user-select: auto;
+    cursor: auto;
+}
+$shadow-variants: (
+    default: 0 0 1rem rgba(141, 73, 58, 0.15),
+    sm: 0 0.125rem 0.25rem rgba(141, 73, 58, 0.075),
+    lg: 0 1rem 3rem rgba(141, 73, 58, 0.175),
+    inset: inset 0 1px 2px rgba(141, 73, 58, 0.075),
+);
