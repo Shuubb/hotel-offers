@@ -1,11 +1,10 @@
 import Carousel from "react-bootstrap/Carousel";
 import { useLoaderData, useOutletContext } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import ModalProvider from "./ModalProvider";
 
-function renderCarousel(public_id, extraImages) {
-    const images = [public_id, ...JSON.parse(extraImages)];
+function renderCarousel(main_id, extraImages) {
+    const images = [main_id, ...extraImages];
     return (
         <Carousel fade interval={null} controls={false}>
             {images.map((id, index) => (
@@ -15,7 +14,7 @@ function renderCarousel(public_id, extraImages) {
                             height: "220px",
                             backgroundSize: "cover",
                             backgroundPosition: "center",
-                            backgroundImage: `url(https://res.cloudinary.com/dmltpftir/image/upload/v1731788700/${id}.jpg)`,
+                            backgroundImage: `url(https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${id}/public)`,
                         }}
                         className="rounded-top"
                     />
@@ -26,66 +25,27 @@ function renderCarousel(public_id, extraImages) {
 }
 
 // Main PostCardProvider Component
-export default function PostCardProvider({ public_id, modal = true }) {
+export default function PostCardProvider({ data, modal = true }) {
     const { language } = useOutletContext();
 
-    const [data, setData] = useState({
-        title: "Loading...",
-        shortDescription: "Loading...",
-        longDescription: "Loading...",
-        extraImages: "[]",
-    });
-
-    useEffect(() => {
-        const fetchPostData = async () => {
-            try {
-                const url = `https://cloudinaryapi.shubitidzed9.workers.dev/resources/image/upload/${public_id}`;
-                const response = await fetch(url, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Basic ${btoa("318134288265838:cwzTqFWcZrsZx4OZdcPsZupW-1k")}`,
-                    },
-                });
-
-                if (!response.ok) throw new Error("Failed to fetch post data.");
-                const result = await response.json();
-
-                const parsedData = result.tags.reduce((acc, tag) => {
-                    const [key, ...valueParts] = tag.split("-");
-                    acc[key] = valueParts.join("-").replaceAll("$comma$", ",").slice(1, -1);
-                    return acc;
-                }, {});
-
-                setData((prev) => ({
-                    ...prev,
-                    ...parsedData,
-                }));
-            } catch (error) {
-                console.error("Error fetching post data:", error);
-            }
-        };
-
-        fetchPostData();
-    }, [public_id]);
-
     return (
-        <ModalProvider title={data["title" + language]}>
+        <ModalProvider title={data.meta["title"]}>
             <Card className="m-2 rounded border-0 user-select-none shadow shadow-hover" style={{ width: "300px" }}>
-                {renderCarousel(public_id, data.extraImages)}
+                {renderCarousel(data.id, data.meta.extraImages)}
                 <Card.Body className="pointer">
-                    <Card.Title>{data["title" + language]}</Card.Title>
-                    <Card.Text>{data["shortDescription" + language]}</Card.Text>
+                    <Card.Title>{data.meta["title"]}</Card.Title>
+                    <Card.Text>{data.meta["shortDescription"]}</Card.Text>
                 </Card.Body>
             </Card>
             <Card className="rounded border-0 w-100 border-0">
-                {renderCarousel(public_id, data.extraImages)}
+                {renderCarousel(data.id, data.meta.extraImages)}
                 <Card.Body>
                     <Card.Text>
-                        <strong>{data["shortDescription" + language]}</strong>
+                        <strong>{data.meta["shortDescription"]}</strong>
                     </Card.Text>
                     <Card.Text style={{ whiteSpace: "pre-line" }}>
                         <br />
-                        {data["longDescription" + language]}
+                        {data.meta["longDescription"]}
                     </Card.Text>
                 </Card.Body>
             </Card>

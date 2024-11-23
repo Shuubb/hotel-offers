@@ -17,12 +17,11 @@ const languages = {
 };
 export default function LandingPage() {
     const { language } = useOutletContext();
-    const { bannerImages, cities } = useLoaderData();
+    const { bannerImages, imagesByCities } = useLoaderData();
     const [searchTags, setSearchTags] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
     const [optionsAreLoading, setOptionsAreLoading] = useState(false);
     const [resultsAreLoading, setResultsAreLoading] = useState(false);
-    console.log(language);
 
     const handleSearchTagChange = async (e) => {
         const value = e.target.value;
@@ -88,26 +87,24 @@ export default function LandingPage() {
                     <hr />
                     <div className={`d-flex my-3 rounded ${responsiveClass}`}>
                         <Row>
-                            {searchResults.map((public_id, index) => (
+                            {searchResults.map((data, index) => (
                                 <Col key={index} className={responsiveClass}>
-                                    <PostCardProvider public_id={public_id} />
+                                    <PostCardProvider data={data} />
                                 </Col>
                             ))}
                         </Row>
                     </div>
                 </>
             ) : (
-                Object.entries(cities).map(([city, posts]) => (
+                Object.entries(imagesByCities).map(([city, posts]) => (
                     <div key={city} className={resultsAreLoading ? "fade-in fade-out" : "fade-in"}>
-                        <h3 className="fs-2 m-2">
-                            {language === "GEO" ? city.slice(1, -1) : languages[city.slice(1, -1).trim()]}
-                        </h3>
+                        <h3 className="fs-2 m-2">{language === "GEO" ? city : languages[city]}</h3>
                         <hr />
                         <div className={`d-flex my-3 rounded ${responsiveClass}`}>
                             <Row>
-                                {posts.map((public_id, index) => (
+                                {posts.map((data, index) => (
                                     <Col key={index} className={responsiveClass}>
-                                        <PostCardProvider public_id={public_id} />
+                                        <PostCardProvider data={data} />
                                     </Col>
                                 ))}
                             </Row>

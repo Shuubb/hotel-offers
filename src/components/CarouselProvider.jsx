@@ -3,18 +3,14 @@ import Carousel from "react-bootstrap/Carousel";
 import ModalProvider from "./ModalProvider";
 
 export default function CarouselProvider({ bannerImages }) {
-    const CarouselImage = ({ public_id, ...props }) => (
+    const CarouselImage = ({ id, ...props }) => (
         <div
             style={{
                 width: "100%",
                 height: "50vh",
-                backgroundImage: `
-    url(https://res.cloudinary.com/dmltpftir/image/upload/v1731348895/${public_id}),
-    url(https://res.cloudinary.com/dmltpftir/image/upload/e_pixelate:100/v1731348895/${public_id})
-`,
-                backgroundRepeat: "no-repeat, repeat",
+                backgroundImage: `url(https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${id}/public)`,
                 backgroundSize: "contain",
-                backgroundPosition: "center, center",
+                backgroundPosition: "center",
                 cursor: "pointer",
             }}
             {...props}
@@ -27,10 +23,10 @@ export default function CarouselProvider({ bannerImages }) {
             className="rounded-bottom mb-4 shadow"
             interval={15000}
         >
-            {bannerImages.map((public_id, index) => (
+            {bannerImages.map((bannerImage, index) => (
                 <Carousel.Item key={index}>
                     <ModalProvider>
-                        <CarouselImage public_id={public_id} />
+                        <CarouselImage id={bannerImage.id} />
                     </ModalProvider>
                 </Carousel.Item>
             ))}

@@ -5,7 +5,11 @@ import AdminLayout from "./layouts/admin/AdminLayout";
 import ManagePostsPage from "./pages/admin/ManagePostsPage";
 import AnalyticsPage from "./pages/admin/AnalyticsPage";
 import ManageProfiles from "./pages/admin/ManageProfiles";
-import { expression } from "@cloudinary/url-gen/qualifiers/expression";
+
+const auth = "89MmxaKZYYlM_Fg2HNpj6fSZqG0AiO2gWpCl8DEo"; // Existing Auth Token
+
+// Set the new base URL for the API
+const BASE_URL = "https://hoteloffers.ge/api/";
 
 export default createBrowserRouter([
     {
@@ -16,49 +20,24 @@ export default createBrowserRouter([
                 path: "",
                 element: <LandingPage />,
                 loader: async () => {
-                    const fetchBanners = async () => {
-                        const res = await fetch("https://cloudinaryapi.shubitidzed9.workers.dev/resources/search", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({ expression: `tags=banner-"true"` }),
-                        });
-                        const { resources } = await res.json();
-                        return resources.map((resource) => resource.public_id);
+                    const res = await fetch(`${BASE_URL}?city=*`);
+                    const {
+                        result: { images },
+                    } = await res.json();
+                    console.log(images);
+                    const data = {
+                        bannerImages: images.filter((image) => image.meta.banner),
+                        imagesByCities: images.reduce((acc, currentValue) => {
+                            const city = currentValue.meta.city;
+                            if (!acc[city]) {
+                                acc[city] = [];
+                            }
+                            acc[city].push(currentValue);
+                            return acc;
+                        }, {}),
                     };
-
-                    const fetchCities = async () => {
-                        const res = await fetch(
-                            "https://cloudinaryapi.shubitidzed9.workers.dev/tags/image?prefix=cityGEO-"
-                        );
-                        const { tags } = await res.json();
-                        const cityData = {};
-
-                        await Promise.all(
-                            tags.map(async (tag) => {
-                                const city = tag.split("-")[1];
-
-                                const res = await fetch(
-                                    "https://cloudinaryapi.shubitidzed9.workers.dev/resources/search",
-                                    {
-                                        method: "POST",
-                                        headers: {
-                                            "Content-Type": "application/json",
-                                        },
-                                        body: JSON.stringify({ expression: `tags=cityGEO-${city}` }),
-                                    }
-                                );
-                                const { resources } = await res.json();
-
-                                cityData[city] = resources.map((resource) => resource.public_id);
-                            })
-                        );
-                        return cityData;
-                    };
-
-                    const [banners, cities] = await Promise.all([fetchBanners(), fetchCities()]);
-                    return { bannerImages: banners, cities };
+                    console.log(data);
+                    return data;
                 },
             },
         ],
