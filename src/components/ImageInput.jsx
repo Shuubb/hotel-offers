@@ -32,11 +32,11 @@ export default function ImageInput({ name, setFinalImages }) {
                         <div
                             className="m-1 rounded shadow-sm hover border"
                             style={{
-                                height: "220px",
+                                aspectRatio: "4/5",
                                 width: "300px",
                                 backgroundImage: `url(${URL.createObjectURL(imageFile)})`,
                                 backgroundPosition: "center",
-                                backgroundSize: "cover",
+                                backgroundSize: "contain",
                             }}
                         />
                     </div>
@@ -53,9 +53,9 @@ export default function ImageInput({ name, setFinalImages }) {
                 }}
                 allowColorEditing={false}
                 allowRotate={false}
-                canvasWidth="300px"
-                canvasHeight="220px"
-                modalHeight="350px"
+                canvasWidth="17.6rem"
+                canvasHeight="22rem"
+                modalHeight="30rem"
                 modalWidth="fit-content"
             />
 
