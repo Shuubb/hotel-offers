@@ -26,9 +26,15 @@ export default function PostCardProvider({ data }) {
 
     return (
         <ModalProvider title={data.meta["title" + language]} className="h-100">
-            <Card className="m-2 rounded border-0 user-select-none shadow shadow-hover" style={{ width: "300px" }}>
-                {renderCarousel(data.id, data.meta.extraImages)}
-                <Card.Body className="pointer">
+            <Card
+                className="m-2 rounded border-0 user-select-none shadow shadow-hover pointer"
+                style={{ width: "300px" }}
+            >
+                <img
+                    src={`https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${data.id}/public`}
+                    className="rounded-top"
+                />
+                <Card.Body>
                     <Card.Title>{data.meta["title" + language]}</Card.Title>
                     <Card.Text>{data.meta["shortDescription" + language]}</Card.Text>
                 </Card.Body>
@@ -49,7 +55,6 @@ export default function PostCardProvider({ data }) {
                                 {data.meta["longDescription" + language]}
                             </Card.Text>
                         </Row>
-
                         <Row>
                             <hr className="p-2 my-3" />
                             <Card.Title>

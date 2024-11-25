@@ -1,14 +1,11 @@
 import { Form } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import { Cloudinary } from "@cloudinary/url-gen/index";
-import { CiSquareRemove, CiEdit } from "react-icons/ci";
-import ModalProvider from "./ModalProvider";
-import { ReactPhotoEditor } from "react-photo-editor";
+import { useEffect, useRef, useState } from "react";
+import { CiSquareRemove } from "react-icons/ci";
 import "react-photo-editor/dist/style.css";
 
 export default function ImageInput({ name, setFinalImages }) {
     const [imageFiles, setImageFiles] = useState([]);
-    const [imageToEdit, setImageToEdit] = useState(null);
+    const imageRef = useRef(null);
 
     useEffect(() => {
         setFinalImages(imageFiles);
@@ -20,7 +17,6 @@ export default function ImageInput({ name, setFinalImages }) {
                 {imageFiles.map((imageFile, index) => (
                     <div className="position-relative">
                         <div className="position-absolute end-0 px-2 my-2  fs-2 text-white d-flex align-items-center">
-                            <CiEdit className="bg-warning m-1 pointer rounded" onClick={() => setImageToEdit(index)} />
                             <CiSquareRemove
                                 className="bg-danger m-1 pointer rounded"
                                 onClick={() => {
@@ -28,37 +24,15 @@ export default function ImageInput({ name, setFinalImages }) {
                                 }}
                             />
                         </div>
-
-                        <div
+                        <img
+                            src={URL.createObjectURL(imageFile)}
+                            width="300px"
                             className="m-1 rounded shadow-sm hover border"
-                            style={{
-                                aspectRatio: "4/5",
-                                width: "300px",
-                                backgroundImage: `url(${URL.createObjectURL(imageFile)})`,
-                                backgroundPosition: "center",
-                                backgroundSize: "contain",
-                            }}
+                            ref={imageRef}
                         />
                     </div>
                 ))}
             </div>
-            <ReactPhotoEditor
-                open={imageToEdit !== null}
-                file={imageFiles[imageToEdit]}
-                onClose={() => setImageToEdit(null)}
-                onSaveImage={(editedImage) => {
-                    const newFiles = [...imageFiles];
-                    newFiles[imageToEdit] = editedImage;
-                    setImageFiles(newFiles);
-                }}
-                allowColorEditing={false}
-                allowRotate={false}
-                canvasWidth="17.6rem"
-                canvasHeight="22rem"
-                modalHeight="30rem"
-                modalWidth="fit-content"
-            />
-
             <Form.Label
                 className="border m-1 rounded h-100 w-100 text-center fs-2 p-3"
                 style={{ cursor: "pointer" }}

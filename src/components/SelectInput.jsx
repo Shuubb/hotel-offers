@@ -97,7 +97,7 @@ export default function SelectInput({
                                 </tr>
                             ) : optionToShow.length !== 0 ? (
                                 optionToShow.slice(0, limit).map((option) => (
-                                    <tr>
+                                    <tr key={option}>
                                         <td
                                             onClick={() => {
                                                 setValuesSelected((prevState) => [...prevState, option]);

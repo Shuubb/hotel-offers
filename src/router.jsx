@@ -22,7 +22,6 @@ export default createBrowserRouter([
                     const {
                         result: { images },
                     } = await res.json();
-                    console.log(images);
                     const decompressedMetadataImages = images.map((image) => ({
                         ...image,
                         meta: {
