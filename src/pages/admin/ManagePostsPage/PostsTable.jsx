@@ -7,7 +7,7 @@ export default function PostsTable({ posts }) {
     const deletePost = async (id) => {
         if (window.confirm("Are you sure you want to delete this post?")) {
             try {
-                const response = await fetch(`https://hoteloffers.ge/api/delete`, {
+                const response = await fetch(`https://hoteloffers.ge/adminapi/delete`, {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ id }),

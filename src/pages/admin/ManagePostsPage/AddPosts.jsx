@@ -49,7 +49,7 @@ export default function AddPost() {
             );
         }
 
-        const response = await fetch("https://hoteloffers.ge/api/upload", {
+        const response = await fetch("https://hoteloffers.ge/adminapi/upload", {
             method: "POST",
             body: formData,
         });
