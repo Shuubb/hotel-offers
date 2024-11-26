@@ -65,7 +65,30 @@ export default createBrowserRouter([
                 path: "posts",
                 element: <ManagePostsPage />,
                 loader: async () => {
-                    return null;
+                    // Fetch without Authorization header to trigger the popup
+                    const response = await fetch("https://hoteloffers.ge/adminapi/?cityGEO=*", {
+                        credentials: "include",
+                    });
+
+                    if (!response.ok) {
+                        // The browser will display the authentication dialog if a 401 status is returned
+                        throw new Error("Authentication required or failed to fetch posts.");
+                    }
+
+                    const data = await response.json();
+                    const resources = data.result.images;
+                    const enrichedPosts = resources.map((resource) => ({
+                        id: resource.id,
+                        created_at: resource.uploaded,
+                        metadata:
+                            {
+                                cityGEO: resource.meta.cityGEO,
+                                ...JSON.parse(LZString.decompressFromUTF16(resource.meta.data)),
+                            } || {},
+                        status: resource.status,
+                    }));
+
+                    return enrichedPosts;
                 },
             },
             {

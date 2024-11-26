@@ -2,29 +2,10 @@ import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import PostsTable from "./PostsTable";
 import LZString from "lz-string";
+import { useLoaderData } from "react-router-dom";
 
 export default function ManagePostsPage() {
-    const [posts, setPosts] = useState([]);
-
-    useEffect(() => {
-        fetch("https://hoteloffers.ge/api/?cityGEO=*&cityENG=*").then((response) =>
-            response.json().then((data) => {
-                const resources = data.result.images;
-                const enrichedPosts = resources.map((resource) => ({
-                    id: resource.id,
-                    created_at: resource.uploaded,
-                    metadata:
-                        {
-                            cityGEO: resource.meta.cityGEO,
-                            ...JSON.parse(LZString.decompressFromUTF16(resource.meta.data)),
-                        } || {},
-                    status: resource.status,
-                }));
-                console.log(enrichedPosts);
-                setPosts(enrichedPosts);
-            })
-        );
-    }, []);
+    const posts = useLoaderData();
 
     return (
         <div className="w-100 m-2 p-3">
