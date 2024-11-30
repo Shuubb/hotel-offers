@@ -26,12 +26,9 @@ export default function ContactUsPage() {
                                 <Form.Control name="email" type="email" placeholder="" required />
                             </FloatingLabel>
                         </Col>
-                        <Col className="p-2 pe-3">
-                            <Button
-                                className="w-100 h-100 d-flex justify-content-center align-items-center"
-                                type="submit"
-                            >
-                                <BsSend size="4rem" />
+                        <Col className="p-2 pe-3 d-flex align-items-end">
+                            <Button className=" w-100 d-flex justify-content-center align-items-center" type="submit">
+                                <BsSend size="2rem" />
                             </Button>
                         </Col>
                     </Row>

@@ -35,35 +35,35 @@ export default function DefaultLayout() {
                                     <a
                                         href="mailto:sales@hoteloffers.ge"
                                         target="_blank"
-                                        className="d-flex align-items-center"
+                                        className="d-flex align-items-center text-decoration-underline my-3"
                                         style={{ color: "#4285F4" }}
                                     >
-                                        <BsGoogle className="d-inline-block m-2" size="25px" /> sales@hoteloffers.ge
+                                        <BsGoogle className="d-inline-block mx-2" size="25px" /> sales@hoteloffers.ge
                                     </a>
                                     <a
                                         href="tel:+995 571 53 53 89"
                                         target="_blank"
-                                        className="d-flex align-items-center"
+                                        className="d-flex align-items-center text-decoration-underline my-3"
                                         style={{ color: "#25D366" }}
                                     >
-                                        <BsPhone className="d-inline-block m-2" size="25px" /> (+995) 571 53 53 89
+                                        <BsPhone className="d-inline-block mx-2" size="25px" /> (+995) 571 53 53 89
                                     </a>
                                     <a
                                         href="https://www.facebook.com/HotelOffersGeo/"
                                         target="_blank"
-                                        className="d-flex align-items-center"
+                                        className="d-flex align-items-center text-decoration-underline my-3"
                                         style={{ color: "#4267B2" }}
                                     >
-                                        <BsFacebook className="d-inline-block m-2" size="25px" /> HotelOffers.ge - Stay
+                                        <BsFacebook className="d-inline-block mx-2" size="25px" /> HotelOffers.ge - Stay
                                         & Save
                                     </a>
                                     <a
                                         href="https://www.instagram.com/hoteloffers.ge/"
                                         target="_blank"
-                                        className="d-flex align-items-center"
+                                        className="d-flex align-items-center text-decoration-underline my-3"
                                         style={{ color: "#e95950" }}
                                     >
-                                        <BsInstagram className="d-inline-block m-2" size="25px" /> hoteloffers.ge
+                                        <BsInstagram className="d-inline-block mx-2" size="25px" /> hoteloffers.ge
                                     </a>
                                 </small>
                             )}
