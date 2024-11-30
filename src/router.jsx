@@ -1,13 +1,8 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import DefaultLayout from "./layouts/DefaultLayout";
-import AdminLayout from "./layouts/admin/AdminLayout";
-import ManagePostsPage from "./pages/admin/ManagePostsPage/ManagePostsPage";
-import AnalyticsPage from "./pages/admin/AnalyticsPage";
-import ManageProfiles from "./pages/admin/ManageProfiles";
 import LZString from "lz-string";
-
-const BASE_URL = "https://hoteloffers.ge/api/";
+import ContactUsPage from "./pages/ContactUsPage";
 
 export default createBrowserRouter([
     {
@@ -18,7 +13,7 @@ export default createBrowserRouter([
                 path: "",
                 element: <LandingPage />,
                 loader: async () => {
-                    const res = await fetch(`${BASE_URL}?cityGEO=*`);
+                    const res = await fetch(`https://hoteloffers.ge/api/?cityGEO=*`);
                     const {
                         result: { images },
                     } = await res.json();
@@ -51,59 +46,9 @@ export default createBrowserRouter([
                     return data;
                 },
             },
-        ],
-    },
-    {
-        path: "/admin",
-        element: <AdminLayout />,
-        children: [
             {
-                index: true,
-                element: <Navigate to="analytics" />,
-            },
-            {
-                path: "posts",
-                element: <ManagePostsPage />,
-                loader: async () => {
-                    // Fetch without Authorization header to trigger the popup
-                    const response = await fetch("https://hoteloffers.ge/adminapi/?cityGEO=*", {
-                        credentials: "include",
-                    });
-
-                    if (!response.ok) {
-                        // The browser will display the authentication dialog if a 401 status is returned
-                        throw new Error("Authentication required or failed to fetch posts.");
-                    }
-
-                    const data = await response.json();
-                    const resources = data.result.images;
-                    const enrichedPosts = resources.map((resource) => ({
-                        id: resource.id,
-                        created_at: resource.uploaded,
-                        metadata:
-                            {
-                                cityGEO: resource.meta.cityGEO,
-                                ...JSON.parse(LZString.decompressFromUTF16(resource.meta.data)),
-                            } || {},
-                        status: resource.status,
-                    }));
-
-                    return enrichedPosts;
-                },
-            },
-            {
-                path: "profiles",
-                element: <ManageProfiles />,
-                loader: async () => {
-                    return null;
-                },
-            },
-            {
-                path: "analytics",
-                element: <AnalyticsPage />,
-                loader: async () => {
-                    return null;
-                },
+                path: "contact",
+                element: <ContactUsPage />,
             },
         ],
     },
