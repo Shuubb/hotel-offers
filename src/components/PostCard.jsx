@@ -25,7 +25,7 @@ export default function PostCardProvider({ data }) {
     const { language } = useOutletContext();
 
     return (
-        <ModalProvider title={data.meta["title" + language]} className="h-100">
+        <ModalProvider title={data.metadata["title" + language]} className="h-100">
             <Card
                 className="m-2 rounded border-0 user-select-none shadow shadow-hover pointer"
                 style={{ width: "300px" }}
@@ -35,24 +35,24 @@ export default function PostCardProvider({ data }) {
                     className="rounded-top"
                 />
                 <Card.Body>
-                    <Card.Title>{data.meta["title" + language]}</Card.Title>
-                    <Card.Text>{data.meta["shortDescription" + language]}</Card.Text>
+                    <Card.Title>{data.metadata["title" + language]}</Card.Title>
+                    <Card.Text>{data.metadata["shortDescription" + language]}</Card.Text>
                 </Card.Body>
             </Card>
             <Card className="rounded border-0 w-100 border-0 h-100">
                 <Row>
                     <Col>
-                        {renderCarousel(data.id, data.meta.extraImages)}
+                        {renderCarousel(data.id, data.metadata.extraImages)}
                         <Card.Body>
                             <Row className=" mb-3 text-center">
-                                <Card.Title>{data.meta["shortDescription" + language]}</Card.Title>
+                                <Card.Title>{data.metadata["shortDescription" + language]}</Card.Title>
                             </Row>
                         </Card.Body>
                     </Col>
                     <Col className="d-flex flex-column justify-content-between py-3">
                         <Row>
                             <Card.Text style={{ whiteSpace: "pre-line" }}>
-                                {data.meta["longDescription" + language]}
+                                {data.metadata["longDescription" + language]}
                             </Card.Text>
                         </Row>
                         <Row>
@@ -62,17 +62,20 @@ export default function PostCardProvider({ data }) {
                             </Card.Title>
                             <div className="d-flex my-2">
                                 <BiMobile className="text-primary me-2" size="20px" />
-                                <a href={"tel:" + data.meta.phone} className="text-primary text-decoration-underline">
-                                    {data.meta.phone}
+                                <a
+                                    href={"tel:" + data.metadata.phone}
+                                    className="text-primary text-decoration-underline"
+                                >
+                                    {data.metadata.phone}
                                 </a>
                             </div>
                             <div className="d-flex my-2">
                                 <MdEmail className="text-primary me-2" size="20px" />
                                 <a
-                                    href={"mailto:" + data.meta.email}
+                                    href={"mailto:" + data.metadata.email}
                                     className="text-primary text-decoration-underline"
                                 >
-                                    {data.meta.email}
+                                    {data.metadata.email}
                                 </a>
                             </div>
                         </Row>

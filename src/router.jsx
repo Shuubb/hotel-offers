@@ -13,24 +13,16 @@ export default createBrowserRouter([
                 path: "",
                 element: <LandingPage />,
                 loader: async () => {
-                    const res = await fetch(`https://hoteloffers.ge/api/?cityGEO=*`);
-                    const {
-                        result: { images },
-                    } = await res.json();
-                    const decompressedMetadataImages = images.map((image) => ({
-                        ...image,
-                        meta: {
-                            ...image.meta,
-                            data: undefined,
-                            ...JSON.parse(LZString.decompressFromUTF16(image.meta.data)),
-                        },
-                    }));
+                    const res = await fetch(`https://hoteloffers.ge/api/`);
+                    const { images } = await res.json();
+                    console.log(images);
+
                     const data = {
-                        bannerImages: decompressedMetadataImages.filter((image) => image.meta.banner),
-                        imagesByCities: decompressedMetadataImages.reduce((acc, currentValue) => {
-                            const city = currentValue.meta.cityGEO;
-                            if (currentValue.meta.english) {
-                                const cityENG = currentValue.meta.cityENG;
+                        bannerImages: images.filter((image) => image.metadata.banner),
+                        imagesByCities: images.reduce((acc, currentValue) => {
+                            const city = currentValue.metadata.cityGEO;
+                            if (currentValue.metadata.english) {
+                                const cityENG = currentValue.metadata.cityENG;
                                 if (!acc[cityENG]) {
                                     acc[cityENG] = [];
                                 }
@@ -43,6 +35,7 @@ export default createBrowserRouter([
                             return acc;
                         }, {}),
                     };
+                    console.log(data);
                     return data;
                 },
             },

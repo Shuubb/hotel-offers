@@ -49,23 +49,25 @@ export default function CarouselProvider({ bannerImages }) {
         >
             {bannerImages.map((bannerImage, index) => (
                 <Carousel.Item key={index}>
-                    <ModalProvider title={bannerImage.meta["title" + language]}>
+                    <ModalProvider title={bannerImage.metadata["title" + language]}>
                         <CarouselImage id={bannerImage.id} />
 
                         <Card className="rounded border-0 w-100 border-0 h-100">
                             <Row>
                                 <Col>
-                                    {renderCarousel(bannerImage.id, bannerImage.meta.extraImages)}
+                                    {renderCarousel(bannerImage.id, bannerImage.metadata.extraImages)}
                                     <Card.Body>
                                         <Row className=" mb-3 text-center">
-                                            <Card.Title>{bannerImage.meta["shortDescription" + language]}</Card.Title>
+                                            <Card.Title>
+                                                {bannerImage.metadata["shortDescription" + language]}
+                                            </Card.Title>
                                         </Row>
                                     </Card.Body>
                                 </Col>
                                 <Col className="d-flex flex-column justify-content-between py-3">
                                     <Row>
                                         <Card.Text style={{ whiteSpace: "pre-line" }}>
-                                            {bannerImage.meta["longDescription" + language]}
+                                            {bannerImage.metadata["longDescription" + language]}
                                         </Card.Text>
                                     </Row>
                                     <Row>
@@ -78,19 +80,19 @@ export default function CarouselProvider({ bannerImages }) {
                                         <div className="d-flex my-2">
                                             <BiMobile className="text-primary me-2" size="20px" />
                                             <a
-                                                href={"tel:" + bannerImage.meta.phone}
+                                                href={"tel:" + bannerImage.metadata.phone}
                                                 className="text-primary text-decoration-underline"
                                             >
-                                                {bannerImage.meta.phone}
+                                                {bannerImage.metadata.phone}
                                             </a>
                                         </div>
                                         <div className="d-flex my-2">
                                             <MdEmail className="text-primary me-2" size="20px" />
                                             <a
-                                                href={"mailto:" + bannerImage.meta.email}
+                                                href={"mailto:" + bannerImage.metadata.email}
                                                 className="text-primary text-decoration-underline"
                                             >
-                                                {bannerImage.meta.email}
+                                                {bannerImage.metadata.email}
                                             </a>
                                         </div>
                                     </Row>

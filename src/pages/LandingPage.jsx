@@ -15,7 +15,7 @@ export default function LandingPage() {
     return (
         <div>
             <CarouselProvider
-                bannerImages={bannerImages.filter((image) => image.meta.hasOwnProperty("city" + language))}
+                bannerImages={bannerImages.filter((image) => image.metadata.hasOwnProperty("city" + language))}
             />
             <SelectInput
                 label={language === "GEO" ? "იპოვე შენი დასასვენებელი ადგილი" : "Find Your Holiday Destination!"}
