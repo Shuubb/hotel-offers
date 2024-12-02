@@ -1,21 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import ModalProvider from "./ModalProvider";
 import { Card, Col, Row } from "react-bootstrap";
 import { useOutletContext } from "react-router-dom";
-import { BiMobile } from "react-icons/bi";
-import { MdEmail } from "react-icons/md";
 import { BsGoogle, BsPhone } from "react-icons/bs";
 
 export default function CarouselProvider({ bannerImages }) {
     const { language } = useOutletContext();
     const carouselRef = useRef(null);
 
-    useEffect(() => {
-        if (carouselRef.current) {
-            carouselRef.current.next();
-        }
-    }, [language]);
     const handlePrev = (e) => {
         e.stopPropagation();
         if (carouselRef.current) {
@@ -25,7 +18,6 @@ export default function CarouselProvider({ bannerImages }) {
 
     const handleNext = (e) => {
         e.stopPropagation();
-
         if (carouselRef.current) {
             carouselRef.current.next();
         }
@@ -71,6 +63,7 @@ export default function CarouselProvider({ bannerImages }) {
     return (
         <Carousel
             ref={carouselRef}
+            key={language}
             style={{ minWidth: "100%", maxWidth: "100%", height: "50vh", overflow: "hidden", aspectRatio: "9/4" }}
             className="rounded-bottom mb-4 shadow"
             interval={15000}

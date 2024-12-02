@@ -15,7 +15,6 @@ export default createBrowserRouter([
                 loader: async () => {
                     const res = await fetch(`https://hoteloffers.ge/api/`);
                     const { images } = await res.json();
-                    console.log(images);
 
                     const data = {
                         bannerImages: images.filter((image) => image.metadata.banner),
@@ -35,7 +34,6 @@ export default createBrowserRouter([
                             return acc;
                         }, {}),
                     };
-                    console.log(data);
                     return data;
                 },
             },
