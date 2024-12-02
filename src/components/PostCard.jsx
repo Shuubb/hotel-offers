@@ -4,22 +4,7 @@ import { Card, Col, Row } from "react-bootstrap";
 import ModalProvider from "./ModalProvider";
 import { BiMobile } from "react-icons/bi";
 import { MdEmail } from "react-icons/md";
-
-function renderCarousel(main_id, extraImages, imgClass = "") {
-    const images = [main_id, ...extraImages];
-    return (
-        <Carousel fade interval={null} controls={false}>
-            {images.map((id, index) => (
-                <Carousel.Item key={id + index}>
-                    <img
-                        src={`https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${id}/public`}
-                        className="rounded-top"
-                    />
-                </Carousel.Item>
-            ))}
-        </Carousel>
-    );
-}
+import { BsGoogle, BsPhone } from "react-icons/bs";
 
 export default function PostCardProvider({ data }) {
     const { language } = useOutletContext();
@@ -33,52 +18,59 @@ export default function PostCardProvider({ data }) {
                 <img
                     src={`https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${data.id}/public`}
                     className="rounded-top"
+                    width="100%"
                 />
                 <Card.Body>
                     <Card.Title>{data.metadata["title" + language]}</Card.Title>
                     <Card.Text>{data.metadata["shortDescription" + language]}</Card.Text>
                 </Card.Body>
             </Card>
-            <Card className="rounded border-0 w-100 border-0 h-100">
+            <Card className="rounded shadow border p-2">
                 <Row>
                     <Col>
-                        {renderCarousel(data.id, data.metadata.extraImages)}
-                        <Card.Body>
-                            <Row className=" mb-3 text-center">
-                                <Card.Title>{data.metadata["shortDescription" + language]}</Card.Title>
-                            </Row>
-                        </Card.Body>
+                        <Carousel fade interval={null} controls={false} className="shadow shadow-sm">
+                            {[data.id, ...data.metadata.extraImages].map((id, index) => (
+                                <Carousel.Item key={id + index} className="d-flex justify-content-center">
+                                    <img
+                                        src={`https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${id}/public`}
+                                        className="rounded"
+                                        width="100%"
+                                        style={{ minWidth: "300px" }}
+                                    />
+                                </Carousel.Item>
+                            ))}
+                        </Carousel>
                     </Col>
                     <Col className="d-flex flex-column justify-content-between py-3">
-                        <Row>
+                        <Card.Body className="p-0">
+                            <Card.Title className="text-center pb-4">
+                                {data.metadata["shortDescription" + language]}
+                            </Card.Title>
                             <Card.Text style={{ whiteSpace: "pre-line" }}>
                                 {data.metadata["longDescription" + language]}
                             </Card.Text>
-                        </Row>
-                        <Row>
-                            <hr className="p-2 my-3" />
+                        </Card.Body>
+                        <Card.Footer className="bg-transparent">
                             <Card.Title>
                                 {language === "GEO" ? "დასაჯავშნად დაგვიკავშირდით:" : "Contact For Reservations:"}
                             </Card.Title>
-                            <div className="d-flex my-2">
-                                <BiMobile className="text-primary me-2" size="20px" />
-                                <a
-                                    href={"tel:" + data.metadata.phone}
-                                    className="text-primary text-decoration-underline"
-                                >
-                                    {data.metadata.phone}
-                                </a>
-                            </div>
-                            <div className="d-flex my-2">
-                                <MdEmail className="text-primary me-2" size="20px" />
-                                <a
-                                    href={"mailto:" + data.metadata.email}
-                                    className="text-primary text-decoration-underline"
-                                >
-                                    {data.metadata.email}
-                                </a>
-                            </div>
-                        </Row>
+                            <a
+                                href={"mailto:" + data.metadata.email}
+                                target="_blank"
+                                className="d-flex align-items-center text-decoration-underline my-3"
+                                style={{ color: "#4285F4" }}
+                            >
+                                <BsGoogle className="d-inline-block mx-2" size="25px" /> {data.metadata.email}
+                            </a>
+                            <a
+                                href={"tel:" + data.metadata.phone}
+                                target="_blank"
+                                className="d-flex align-items-center text-decoration-underline my-3"
+                                style={{ color: "#25D366" }}
+                            >
+                                <BsPhone className="d-inline-block mx-2" size="25px" /> {data.metadata.phone}
+                            </a>
+                        </Card.Footer>
                     </Col>
                 </Row>
             </Card>
