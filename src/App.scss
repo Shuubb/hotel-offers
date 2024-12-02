@@ -29,17 +29,6 @@ li {
     transition: opacity 300ms;
 }
 
-#photo-editor-modal {
-    * {
-        color: black !important;
-        stroke: black !important;
-    }
-    #canvas {
-        object-fit: cover;
-        border-radius: 10px;
-    }
-}
-
 .logo {
     font-family: "Chewy";
     font-size: 28px !important;
