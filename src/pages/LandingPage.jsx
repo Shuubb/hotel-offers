@@ -11,33 +11,41 @@ export default function LandingPage() {
     const [bannerImagesToRender, setBannerImagesToRender] = useState([]);
     const [imagesByCitiesToRender, setImagesByCitiesToRender] = useState([]);
     const [citiesSearched, setCitiesSearched] = useState([]);
+    const [cityOptions, setCityOptions] = useState([]);
 
     const responsiveClass = window.innerWidth < 750 ? "justify-content-center d-flex" : "";
 
     useEffect(() => {
+        const filteredCityOptions = Object.keys(imagesByCities).filter(
+            (city) => /[A-Za-z]/.test(city) === (language === "ENG")
+        );
+        setCityOptions(filteredCityOptions);
+    }, [language, imagesByCities]);
+
+    useEffect(() => {
         setBannerImagesToRender(bannerImages.filter((image) => image.metadata.hasOwnProperty("city" + language)));
+
         setImagesByCitiesToRender(
             Object.fromEntries(
-                Object.entries(imagesByCities).filter(
-                    ([city]) =>
-                        /[A-Za-z]/.test(city) === (language === "ENG") &&
-                        (!citiesSearched.length || citiesSearched.includes(city))
-                )
+                Object.entries(imagesByCities).filter(([city]) => {
+                    const matchesLanguage = /[A-Za-z]/.test(city) === (language === "ENG");
+                    const matchesSearch = !citiesSearched.length || citiesSearched.includes(city);
+                    return matchesLanguage && matchesSearch;
+                })
             )
         );
-    }, [language]);
+    }, [language, citiesSearched, bannerImages, imagesByCities]);
 
     return (
         <div>
             <CarouselProvider bannerImages={bannerImagesToRender} />
             <SelectInput
                 label={language === "GEO" ? "იპოვე შენი დასასვენებელი ადგილი" : "Find Your Holiday Destination!"}
-                options={Object.keys(imagesByCitiesToRender)}
-                onSelect={(cities) => setCitiesSearched(cities)}
+                options={cityOptions}
+                onSelect={(selectedCities) => setCitiesSearched(selectedCities)}
                 name="search"
                 multiSelect
             />
-
             {Object.entries(imagesByCitiesToRender).map(([city, posts]) => (
                 <div key={city}>
                     <h3 className="fs-2 m-2">{city}</h3>
