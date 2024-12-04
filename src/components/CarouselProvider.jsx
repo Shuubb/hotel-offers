@@ -89,17 +89,24 @@ export default function CarouselProvider({ bannerImages }) {
 
                         <Card className="rounded shadow border p-2">
                             <Row>
-                                <Col>
-                                    <Carousel fade interval={null} controls={false} className="shadow shadow-sm">
+                                <Col className="d-flex flex-column justify-content-center">
+                                    <Carousel
+                                        fade
+                                        interval={null}
+                                        controls={false}
+                                        className="shadow shadow-sm modalImage"
+                                    >
                                         {[bannerImage.id, ...bannerImage.metadata.extraImages].map((id, index) => (
-                                            <Carousel.Item key={id + index} className="d-flex justify-content-center">
-                                                <img
-                                                    src={`https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${id}/public`}
-                                                    className="rounded"
-                                                    width="100%"
-                                                    style={{ minWidth: "300px" }}
-                                                />
-                                            </Carousel.Item>
+                                            <Carousel.Item
+                                                key={id + index}
+                                                className="rounded h-100"
+                                                style={{
+                                                    aspectRatio: "9/8",
+                                                    backgroundImage: `url(https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${id}/public)`,
+                                                    backgroundSize: "cover",
+                                                    backgroundPosition: "center",
+                                                }}
+                                            ></Carousel.Item>
                                         ))}
                                     </Carousel>
                                 </Col>

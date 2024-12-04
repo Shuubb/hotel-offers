@@ -13,13 +13,19 @@ export default function PostCardProvider({ data }) {
         <ModalProvider title={data.metadata["title" + language]} className="h-100">
             <Card
                 className="m-2 rounded border-0 user-select-none shadow shadow-hover pointer"
-                style={{ width: "300px" }}
+                style={{ width: "300px", aspectRatio: "9/7" }}
             >
-                <img
-                    src={`https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${data.id}/public`}
+                <div
+                    style={{
+                        backgroundImage: `url(https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${data.id}/public)`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        width: "100%",
+                        height: "100%",
+                    }}
                     className="rounded-top"
-                    width="100%"
                 />
+
                 <Card.Body>
                     <Card.Title>{data.metadata["title" + language]}</Card.Title>
                     <Card.Text>{data.metadata["shortDescription" + language]}</Card.Text>
@@ -27,17 +33,19 @@ export default function PostCardProvider({ data }) {
             </Card>
             <Card className="rounded shadow border p-2">
                 <Row>
-                    <Col>
-                        <Carousel fade interval={null} controls={false} className="shadow shadow-sm">
+                    <Col className="d-flex flex-column justify-content-center">
+                        <Carousel fade interval={null} controls={false} className="shadow shadow-sm modalImage">
                             {[data.id, ...data.metadata.extraImages].map((id, index) => (
-                                <Carousel.Item key={id + index} className="d-flex justify-content-center">
-                                    <img
-                                        src={`https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${id}/public`}
-                                        className="rounded"
-                                        width="100%"
-                                        style={{ minWidth: "300px" }}
-                                    />
-                                </Carousel.Item>
+                                <Carousel.Item
+                                    key={id + index}
+                                    className="rounded h-100"
+                                    style={{
+                                        aspectRatio: "9/8",
+                                        backgroundImage: `url(https://imagedelivery.net/Rfx3xvw3hWThLwLzWkoMnQ/${id}/public)`,
+                                        backgroundSize: "cover",
+                                        backgroundPosition: "center",
+                                    }}
+                                ></Carousel.Item>
                             ))}
                         </Carousel>
                     </Col>
