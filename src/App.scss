@@ -31,7 +31,7 @@ li {
 
 .logo {
     font-family: "Chewy";
-    font-size: 28px !important;
+    font-size: 28px;
     letter-spacing: 1px;
     color: #8d493a !important;
     border: 2px solid #8d493a;
@@ -40,7 +40,8 @@ li {
     padding: 7px 12px;
     transition: 300ms;
     will-change: color, background-color;
-    &:hover {
+    &:hover,
+    &.hover {
         color: white !important;
         background-color: #8d493a;
     }

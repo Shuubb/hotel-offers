@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from "react-router-dom";
+import { Link, Navigate, createBrowserRouter } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import DefaultLayout from "./layouts/DefaultLayout";
 import LZString from "lz-string";
@@ -42,5 +42,22 @@ export default createBrowserRouter([
                 element: <ContactUsPage />,
             },
         ],
+    },
+    {
+        path: "*",
+        element: (
+            <div className="vh-100 vw-100 d-flex justify-content-center align-items-center fs-1 flex-column">
+                <div className="logo text-center user-select-none m-2 hover" style={{ fontSize: "100px" }}>
+                    Hotel
+                    <br /> Offers
+                </div>
+                <div className="vh-100 vw-100 d-flex justify-content-center align-items-center fs-1 flex-column text-center">
+                    Oops! You Are On The Wrong Place :D
+                    <Link to="/" variant="success" className="btn fs-1 btn-success m-2 ">
+                        Go To Main Page
+                    </Link>
+                </div>
+            </div>
+        ),
     },
 ]);
