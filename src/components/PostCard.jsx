@@ -1,13 +1,13 @@
 import Carousel from "react-bootstrap/Carousel";
-import { useLoaderData, useOutletContext } from "react-router-dom";
 import { Card, Col, Row } from "react-bootstrap";
 import ModalProvider from "./ModalProvider";
-import { BiMobile } from "react-icons/bi";
-import { MdEmail } from "react-icons/md";
 import { BsGoogle, BsPhone } from "react-icons/bs";
+import MultiLang from "./MultiLang";
+import { useContext } from "react";
+import LangContext from "../contexts/LangContext/LangContext";
 
 export default function PostCardProvider({ data }) {
-    const { language } = useOutletContext();
+    const { language } = useContext(LangContext);
 
     return (
         <ModalProvider title={data.metadata["title" + language]} className="h-100">
@@ -60,7 +60,7 @@ export default function PostCardProvider({ data }) {
                         </Card.Body>
                         <Card.Footer className="bg-transparent">
                             <Card.Title>
-                                {language === "GEO" ? "დასაჯავშნად დაგვიკავშირდით:" : "Contact For Reservations:"}
+                                <MultiLang>Contact For Reservations:</MultiLang>
                             </Card.Title>
                             <a
                                 href={"mailto:" + data.metadata.email}

@@ -1,17 +1,16 @@
 import { Col, Container, Row } from "react-bootstrap";
 import NavBar from "../components/NavBar";
 import { Outlet, useLocation } from "react-router-dom";
-import { useState } from "react";
 import { BsFacebook, BsGoogle, BsInstagram, BsPhone } from "react-icons/bs";
+import MultiLang from "../components/MultiLang";
 
 export default function DefaultLayout() {
-    const [language, setLanguage] = useState("GEO");
     const location = useLocation();
     return (
         <div className="jumbotron">
-            <NavBar language={language} setLanguage={setLanguage} />
+            <NavBar />
             <Container>
-                <Outlet context={{ language }} />
+                <Outlet />
             </Container>
             <div className="jumbotron">
                 <hr className="mx-5" />
@@ -21,16 +20,12 @@ export default function DefaultLayout() {
                             {location.pathname !== "/contact" && (
                                 <small className="d-inline-block">
                                     <strong className="text-center">
-                                        {language === "GEO" ? (
-                                            <>
-                                                <p>გსურთ შეთავაზების განთავსება?</p>
-                                                <p>დაგვიკავშირდით!</p>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <p>Want To Place Offer?</p> <p>Contact Us!</p>
-                                            </>
-                                        )}
+                                        <p>
+                                            <MultiLang>Want To Place Offer?</MultiLang>
+                                        </p>
+                                        <p>
+                                            <MultiLang>Contact Us!</MultiLang>
+                                        </p>
                                     </strong>
                                     <a
                                         href="mailto:sales@hoteloffers.ge"
@@ -49,7 +44,7 @@ export default function DefaultLayout() {
                                         <BsPhone className="d-inline-block mx-2" size="25px" /> (+995) 571 53 53 89
                                     </a>
                                     <a
-                                        href="https://www.facebook.com/HotelOffersGeo/"
+                                        href="https://www.facebook.com/HotelOffersGe/"
                                         target="_blank"
                                         className="d-flex align-items-center text-decoration-underline my-3"
                                         style={{ color: "#4267B2" }}

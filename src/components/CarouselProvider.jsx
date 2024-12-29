@@ -1,12 +1,14 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import ModalProvider from "./ModalProvider";
 import { Card, Col, Row } from "react-bootstrap";
 import { useOutletContext } from "react-router-dom";
 import { BsGoogle, BsPhone } from "react-icons/bs";
+import MultiLang from "./MultiLang";
+import LangContext from "../contexts/LangContext/LangContext";
 
 export default function CarouselProvider({ bannerImages }) {
-    const { language } = useOutletContext();
+    const { language } = useContext(LangContext);
     const carouselRef = useRef(null);
 
     const handlePrev = (e) => {
@@ -106,7 +108,7 @@ export default function CarouselProvider({ bannerImages }) {
                                                     backgroundSize: "cover",
                                                     backgroundPosition: "center",
                                                 }}
-                                            ></Carousel.Item>
+                                            />
                                         ))}
                                     </Carousel>
                                 </Col>
@@ -121,9 +123,7 @@ export default function CarouselProvider({ bannerImages }) {
                                     </Card.Body>
                                     <Card.Footer className="bg-transparent">
                                         <Card.Title>
-                                            {language === "GEO"
-                                                ? "დასაჯავშნად დაგვიკავშირდით:"
-                                                : "Contact For Reservations:"}
+                                            <MultiLang>Contact For Reservations:</MultiLang>
                                         </Card.Title>
                                         <a
                                             href={"mailto:" + bannerImage.metadata.email}

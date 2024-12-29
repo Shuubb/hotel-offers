@@ -3,10 +3,12 @@ import CarouselProvider from "../components/CarouselProvider";
 import SelectInput from "../components/SelectInput";
 import PostCardProvider from "../components/PostCard";
 import { Row, Col } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import MultiLang from "../components/MultiLang";
+import LangContext from "../contexts/LangContext/LangContext";
 
 export default function LandingPage() {
-    const { language } = useOutletContext();
+    const { language } = useContext(LangContext);
     const { bannerImages, imagesByCities } = useLoaderData();
     const [bannerImagesToRender, setBannerImagesToRender] = useState([]);
     const [imagesByCitiesToRender, setImagesByCitiesToRender] = useState([]);
@@ -40,7 +42,7 @@ export default function LandingPage() {
         <div>
             <CarouselProvider bannerImages={bannerImagesToRender} />
             <SelectInput
-                label={language === "GEO" ? "იპოვე შენი დასასვენებელი ადგილი" : "Find Your Holiday Destination!"}
+                label={<MultiLang>Find Your Holiday Destination!</MultiLang>}
                 options={cityOptions}
                 onSelect={(selectedCities) => setCitiesSearched(selectedCities)}
                 name="search"
