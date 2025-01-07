@@ -2,19 +2,7 @@ import findMultiple from '../database/findMultiple';
 
 export default async function (request, env) {
 	try {
-		const filter = Object.fromEntries(
-			[]
-				.concat(request.query.filter)
-				.map((v) => v?.split(':'))
-				.filter(Boolean)
-		);
-		const sort = Object.fromEntries(
-			[]
-				.concat(request.query.sort)
-				.map((v) => v?.split(':').map((x, i) => (i ? Number(x) : x)))
-				.filter(Boolean)
-		);
-		const limit = request.query.limit ? request.query.limit : 10;
+		const { filter, sort, limit } = await request.json();
 
 		const result = await findMultiple('posts', filter, sort, limit, env);
 

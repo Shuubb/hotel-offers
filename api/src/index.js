@@ -12,7 +12,7 @@ const router = AutoRouter({
 });
 
 router
-	.get('/api/getPosts', getPosts)
+	.post('/api/getPosts', getPosts)
 	.post('/api/addPost', jwtValidation, addPost)
 	.all('*', () => new Response('Not Found', { status: 404 }));
 //fix
