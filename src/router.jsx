@@ -6,6 +6,7 @@ import { createAuthBrowserRouter } from "ds-auth-provider";
 import ProfilePage from "./pages/user/ProfilePage";
 import AddPostPage from "./pages/user/hotel/AddPostPage";
 import SettingsPage from "./pages/user/SettingsPage";
+import { jwtDecode } from "jwt-decode";
 const translator = {
     "Contact Us": "დაგვიკავშირდით",
     "Log In": "შესვლა",
@@ -45,7 +46,7 @@ export default createAuthBrowserRouter(
                                 limit: 5,
                             }),
                         });
-                        const bannerPostsResult = await fetch("/api/getPosts?sort=views:-1&filter=banner:true", {
+                        const bannerPostsResult = await fetch("/api/getPosts", {
                             method: "POST",
                             body: JSON.stringify({
                                 sort: {
@@ -64,7 +65,6 @@ export default createAuthBrowserRouter(
                             posts,
                             bannerPosts,
                         };
-                        console.log(data);
                         return data;
                     },
                 },
@@ -90,6 +90,17 @@ export default createAuthBrowserRouter(
                     },
                 },
             ],
+            loader: async () => {
+                const jwt = localStorage.getItem("jwt");
+                try {
+                    const exp = jwtDecode(jwt).exp;
+                    const now = Math.floor(Date.now() / 1000);
+                    if (exp < now) throw new Error("Expired");
+                } catch {
+                    localStorage.removeItem("jwt");
+                }
+                return null;
+            },
         },
         {
             path: "*",
