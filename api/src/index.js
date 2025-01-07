@@ -11,10 +11,9 @@ const router = AutoRouter({
 });
 
 router
-	.get('/getPosts', getPosts)
-	.post('/addPost', jwtValidation)
+	.get('/api/getPosts', getPosts)
+	.post('/api/addPost', jwtValidation)
 	.all('*', () => new Response('Not Found', { status: 404 }));
-console.log(router);
 //fix
 export default {
 	fetch: router.fetch,
