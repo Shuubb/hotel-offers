@@ -1,9 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { Button, Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { BsFacebook, BsGoogle, BsInstagram, BsPhone, BsSend } from "react-icons/bs";
-import { useLocation, useOutletContext } from "react-router-dom";
-import LangContext from "../contexts/LangContext/LangContext";
-import MultiLang from "../components/MultiLang";
+import { MultiLang } from "ds-auth-provider";
 
 export default function ContactUsPage() {
     return (

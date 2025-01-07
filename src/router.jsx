@@ -3,7 +3,29 @@ import LandingPage from "./pages/LandingPage";
 import DefaultLayout from "./layouts/DefaultLayout";
 import ContactUsPage from "./pages/ContactUsPage";
 import { createAuthBrowserRouter } from "ds-auth-provider";
-
+import ProfilePage from "./pages/user/ProfilePage";
+import AddPostPage from "./pages/user/hotel/AddPostPage";
+import SettingsPage from "./pages/user/SettingsPage";
+const translator = {
+    "Contact Us": "დაგვიკავშირდით",
+    "Log In": "შესვლა",
+    "Sign Up": "რეგისტრაცია",
+    "Find Your Holiday Destination!": "იპოვე შენი დასასვენებელი ადგილი!",
+    "Contact For Reservations": "დასაჯავშნად დაგვიკავშირდით",
+    "Want To Place Offer?": "გსურთ შეთავაზების განთავსება?",
+    "Contact Us!": "დაგვიკავშირდით!",
+    "Leave The Question": "დაგვიტოვეთ შეკითხვა",
+    Name: "სახელი",
+    Email: "ელ-ფოსტა",
+    Password: "პაროლი",
+    Message: "შეტყობინება",
+    Register: "რეგისტრაცია",
+    Login: "შესვლა",
+    "Dont Have An Account?": "არ გაქვთ ანგარიში?",
+    "Already Have An Account?": "უკვე გაქვთ ანგარიში?",
+    "Forgot Password?": "დაგავიწყდათ პაროლი?",
+    "Or Contact Us": "ან დაგვიკავშირდით",
+};
 export default createAuthBrowserRouter(
     [
         {
@@ -14,36 +36,58 @@ export default createAuthBrowserRouter(
                     path: "",
                     element: <LandingPage />,
                     loader: async () => {
-                        const res = await fetch(`https://hoteloffers.ge/api/`);
-                        const { images } = await res.json();
+                        const postsResult = await fetch("/api/getPosts", {
+                            method: "POST",
+                            body: JSON.stringify({
+                                sort: {
+                                    views: -1,
+                                },
+                                limit: 5,
+                            }),
+                        });
+                        const bannerPostsResult = await fetch("/api/getPosts?sort=views:-1&filter=banner:true", {
+                            method: "POST",
+                            body: JSON.stringify({
+                                sort: {
+                                    views: -1,
+                                },
+                                filter: {
+                                    banner: true,
+                                },
+                            }),
+                        });
+
+                        const posts = await postsResult.json();
+                        const bannerPosts = await bannerPostsResult.json();
+
                         let data = {
-                            bannerImages: [],
-                            imagesByCities: [],
+                            posts,
+                            bannerPosts,
                         };
-                        if (images) {
-                            data.bannerImages = images.filter((image) => image.metadata.banner);
-                            data.imagesByCities = images.reduce((acc, currentValue) => {
-                                const city = currentValue.metadata.cityGEO;
-                                if (currentValue.metadata.english) {
-                                    const cityENG = currentValue.metadata.cityENG;
-                                    if (!acc[cityENG]) {
-                                        acc[cityENG] = [];
-                                    }
-                                    acc[cityENG].push(currentValue);
-                                }
-                                if (!acc[city]) {
-                                    acc[city] = [];
-                                }
-                                acc[city].push(currentValue);
-                                return acc;
-                            }, {});
-                        }
+                        console.log(data);
                         return data;
                     },
                 },
                 {
                     path: "contact",
                     element: <ContactUsPage />,
+                },
+                {
+                    path: "profile/:clientId",
+                    element: <ProfilePage />,
+                    children: [
+                        {
+                            path: "addpost",
+                            element: <AddPostPage />,
+                        },
+                        {
+                            path: "settings",
+                            element: <SettingsPage />,
+                        },
+                    ],
+                    loader: async ({ params }) => {
+                        return { clientId: params.clientId };
+                    },
                 },
             ],
         },
@@ -65,8 +109,13 @@ export default createAuthBrowserRouter(
             ),
         },
     ],
-    <Link to="/" className="logo text-center m-0 user-select-none">
-        Hotel <br />
-        Offers
-    </Link>
+    {
+        logo: (
+            <Link to="/" className="logo text-center m-0 user-select-none">
+                Hotel <br />
+                Offers
+            </Link>
+        ),
+        translator,
+    }
 );

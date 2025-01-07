@@ -2,14 +2,14 @@ import { Col, Container, Row } from "react-bootstrap";
 import NavBar from "../components/NavBar";
 import { Outlet, useLocation } from "react-router-dom";
 import { BsFacebook, BsGoogle, BsInstagram, BsPhone } from "react-icons/bs";
-import MultiLang from "../components/MultiLang";
+import { MultiLang } from "ds-auth-provider";
 
 export default function DefaultLayout() {
     const location = useLocation();
     return (
         <div className="jumbotron">
             <NavBar />
-            <Container>
+            <Container className="px-4">
                 <Outlet />
             </Container>
             <div className="jumbotron">
