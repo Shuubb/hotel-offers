@@ -10,7 +10,11 @@
   },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.5.2",
-    "wrangler": "^3.60.3",
-    "vitest": "2.0.5"
+    "vitest": "2.0.5",
+    "wrangler": "^3.60.3"
+  },
+  "dependencies": {
+    "itty-router": "^5.0.18",
+    "jsonwebtoken": "^9.0.2"
   }
 }

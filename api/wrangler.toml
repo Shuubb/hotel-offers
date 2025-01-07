@@ -114,9 +114,9 @@ enabled = true
 # index_name = "my-index"
 
 [vars]
-CLOUDFLARE_ACCOUNT_ID = "dca49032ff36b7032e0001eeed30102d" 
-USER_CREDENTIALS = "zuzi:zuzi"
-
-[[r2_buckets]]
-binding = "R2_BUCKET"
-bucket_name = "database"
+MONGO_DB_URL="https://eu-central-1.aws.data.mongodb-api.com/app/data-mbwhq/endpoint/data/v1"
+MONGO_DB_API_KEY="ONlniHzuugMOBZBCeLGHZmqCBHJTeqcZeZmKXaWsk8lBoOfEAg8wyuAaBY8emVxv"
+MONGO_DB_CLUSTER_NAME="GeoGateways"
+MONGO_DB_DATABASE_NAME="HotelOffers"
+JWT_SECRET="92db2aa4df36b00fd67c392d4ad3759982537f9c27b587f1e6b5291322f675c706d682f6f9e65c39307e022fe1eafecf46054c32a469458355f041fcd379ce5c6e0a8f73fa9b1c9cb0094c92e6d0f747eba11bb6e44d4c442c76b61568c119929e4b04ef4c30194987df9fe4bdcad643742160824f88ef457f5b8590dfdd206dfe0be90f3098446496e66c3ee406f55348b1e21e459eaa95bb571ee5dfbc1e548b81a9174cc78eeb2566dce81bd6a6cc802867e28c87c1dc857ccda2aa6090bc3ab0f625011763b419af359a9d57fc2fe4de87468a2f99b700631dd81dafaef607c7df9d0d1d139190a98f95e7bfec49ea50cce226eb051845f70f6b0d131105"
+JWT_EXPIRATION="1h"
