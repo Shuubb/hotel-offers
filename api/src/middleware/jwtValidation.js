@@ -1,4 +1,3 @@
-// jwtValidation.js
 import jwt from 'jsonwebtoken';
 
 // JWT validation middleware function

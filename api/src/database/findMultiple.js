@@ -1,4 +1,4 @@
-export default async function (collection, filter, sort, env) {
+export default async function (collection, filter, sort, limit, env) {
 	try {
 		const res = await fetch(`${env.MONGO_DB_URL}/action/find`, {
 			method: 'POST',
@@ -12,6 +12,7 @@ export default async function (collection, filter, sort, env) {
 				dataSource: env.MONGO_DB_CLUSTER_NAME,
 				filter,
 				sort, // Add the sort parameter
+				limit,
 			}),
 		});
 

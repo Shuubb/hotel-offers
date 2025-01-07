@@ -2,8 +2,21 @@ import findMultiple from '../database/findMultiple';
 
 export default async function (request, env) {
 	try {
-		// Await the result from the findMultiple function
-		const result = await findMultiple('posts', {}, { views: -1 }, env);
+		const filter = Object.fromEntries(
+			[]
+				.concat(request.query.filter)
+				.map((v) => v?.split(':'))
+				.filter(Boolean)
+		);
+		const sort = Object.fromEntries(
+			[]
+				.concat(request.query.sort)
+				.map((v) => v?.split(':').map((x, i) => (i ? Number(x) : x)))
+				.filter(Boolean)
+		);
+		const limit = request.query.limit ? request.query.limit : 10;
+
+		const result = await findMultiple('posts', filter, sort, limit, env);
 
 		return new Response(JSON.stringify(result.documents), { status: 200 });
 	} catch (error) {

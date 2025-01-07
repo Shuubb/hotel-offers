@@ -1,4 +1,5 @@
 import jwtValidation from './middleware/jwtValidation';
+import addPost from './posts/addPost';
 import getPosts from './posts/getPosts';
 
 import { AutoRouter, cors } from 'itty-router';
@@ -12,7 +13,7 @@ const router = AutoRouter({
 
 router
 	.get('/api/getPosts', getPosts)
-	.post('/api/addPost', jwtValidation)
+	.post('/api/addPost', jwtValidation, addPost)
 	.all('*', () => new Response('Not Found', { status: 404 }));
 //fix
 export default {
