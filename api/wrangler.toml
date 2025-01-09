@@ -115,6 +115,7 @@ enabled = true
 
 [vars]
 MONGO_DB_URL="https://eu-central-1.aws.data.mongodb-api.com/app/data-mbwhq/endpoint/data/v1"
+MONGO_DB_CON_STRING="mongodb://shuubb:Sulmaviwkdeba1!@geogateways-shard-00-00.68xeumv.mongodb.net:27017,geogateways-shard-00-01.68xeumv.mongodb.net:27017,geogateways-shard-00-02.68xeumv.mongodb.net:27017/?replicaSet=atlas-abcdef-shard-0&retryWrites=true&w=majority"
 MONGO_DB_API_KEY="ONlniHzuugMOBZBCeLGHZmqCBHJTeqcZeZmKXaWsk8lBoOfEAg8wyuAaBY8emVxv"
 MONGO_DB_CLUSTER_NAME="GeoGateways"
 MONGO_DB_DATABASE_NAME="HotelOffers"

@@ -2,9 +2,10 @@ import React, { useContext, useRef } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { LangContext } from "ds-auth-provider";
 
-export default function CarouselProvider({ bannerPosts }) {
+export default function CarouselProvider({ bannerImages, height = "50vh", className }) {
     const { language } = useContext(LangContext);
     const carouselRef = useRef(null);
+    console.log(bannerImages);
 
     const handlePrev = (e) => {
         e.stopPropagation();
@@ -61,25 +62,25 @@ export default function CarouselProvider({ bannerPosts }) {
         <Carousel
             ref={carouselRef}
             key={language}
-            style={{ minWidth: "100%", maxWidth: "100%", height: "50vh", overflow: "hidden", aspectRatio: "9/4" }}
-            className="rounded-bottom mb-4 shadow"
+            style={{ minWidth: "100%", maxWidth: "100%", height: height, overflow: "hidden", aspectRatio: "9/4" }}
+            className={"rounded-bottom mb-2 shadow " + className}
             interval={15000}
         >
-            {bannerPosts.map((bannerPost, index) => (
+            {bannerImages.map((bannerImage, index) => (
                 <Carousel.Item key={index}>
                     <div
                         style={{
                             minWidth: "100%",
                             maxWidth: "100%",
-                            height: "50vh",
+                            height: height,
                             aspectRatio: "9/4",
                         }}
                         className="d-flex justify-content-center bg-black"
                     >
                         <CarouselImage
-                            id={bannerPost.images[0]}
-                            prevId={bannerPosts[index - 1 < 0 ? bannerPosts.length - 1 : index - 1].images[0]}
-                            nextId={bannerPosts[index + 1 >= bannerPosts.length ? 0 : index + 1].images[0]}
+                            id={bannerImage}
+                            prevId={bannerImages[index - 1 < 0 ? bannerImages.length - 1 : index - 1]}
+                            nextId={bannerImages[index + 1 >= bannerImages.length ? 0 : index + 1]}
                         />
                     </div>
                 </Carousel.Item>

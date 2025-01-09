@@ -7,6 +7,7 @@ import ProfilePage from "./pages/user/ProfilePage";
 import AddPostPage from "./pages/user/hotel/AddPostPage";
 import SettingsPage from "./pages/user/SettingsPage";
 import { jwtDecode } from "jwt-decode";
+import PostPage from "./pages/PostPage";
 const translator = {
     "Contact Us": "დაგვიკავშირდით",
     "Log In": "შესვლა",
@@ -66,6 +67,15 @@ export default createAuthBrowserRouter(
                             bannerPosts,
                         };
                         return data;
+                    },
+                },
+                {
+                    path: "/post/:postId",
+                    element: <PostPage />,
+                    loader: async ({ params }) => {
+                        const result = await fetch(`/api/getPost/${params.postId}`);
+
+                        return await result.json();
                     },
                 },
                 {
