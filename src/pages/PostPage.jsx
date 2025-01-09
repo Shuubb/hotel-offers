@@ -8,5 +8,5 @@ export default function PostPage() {
         console.log(postData);
     }, []);
 
-    // return <Post postData={postData} xs={12} />;
+    return <Post postData={postData} xs={12} />;
 }

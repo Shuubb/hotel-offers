@@ -15,7 +15,7 @@ export default function Post({ postData, xs }) {
     return (
         <Col xs={xs} className="m-3 p-1 rounded  shadow-sm">
             <CarouselProvider bannerImages={postData.images} height={"210px"} className="rounded m-0 p-0 shadow-sm" />
-            <div className="px-2 pb-1" onClick={() => navigate(`/post/${postData._id}`)}>
+            <div className="px-2 pb-1" onClick={() => navigate(`/post/${postData.postId}`)}>
                 <strong>{postData[language.toLowerCase()].title}</strong>
                 <p>{postData[language.toLowerCase()].short}</p>
                 <small className="text-danger mb-3">
