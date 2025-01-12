@@ -9,7 +9,7 @@ export default function DefaultLayout() {
     return (
         <div className="jumbotron">
             <NavBar />
-            <Container className="px-4">
+            <Container className="px-4" style={{ minHeight: "80vh" }}>
                 <Outlet />
             </Container>
             <div className="jumbotron">

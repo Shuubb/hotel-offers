@@ -2,75 +2,85 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link, useNavigate } from "react-router-dom";
+import Offcanvas from "react-bootstrap/Offcanvas";
+import { Link } from "react-router-dom";
 import Flag from "react-world-flags";
-import { MultiLang } from "ds-auth-provider";
-import { useContext, useEffect, useState } from "react";
-import { LangContext } from "ds-auth-provider";
-import useLocalStorage from "use-local-storage";
+import { MultiLang, UserContext, LangContext } from "ds-auth-provider";
+import { useContext } from "react";
 import { BsPerson } from "react-icons/bs";
-import { jwtDecode } from "jwt-decode";
+import { Col, Dropdown, DropdownButton, Row } from "react-bootstrap";
 
 export default function NavBar() {
     const { language, setLanguage } = useContext(LangContext);
-    const [jwt, setJwt] = useLocalStorage("jwt", localStorage.getItem("jwt"));
-    const [user, setUser] = useState(jwt ? jwtDecode(jwt) : { role: "guest" });
+    const { logout, user } = useContext(UserContext);
 
-    useEffect(() => {
-        setUser(jwt ? jwtDecode(jwt) : { role: "guest" });
-    }, [jwt]);
     return (
         <Navbar expand="lg" style={{ zIndex: "999" }}>
             <Container>
-                <Navbar.Brand as={Link} to="/" className="p-2 logo">
+                <Navbar.Brand as={Link} to="/" className="p-2 logo text-wrap text-center" style={{ maxWidth: "30vw" }}>
                     Hotel Offers
                 </Navbar.Brand>
-                <Navbar.Toggle />
-                <Navbar.Collapse>
-                    <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: "100px" }} navbarScroll>
-                        <Nav.Link as={Link} to="contact">
-                            <MultiLang>Contact Us</MultiLang>
-                        </Nav.Link>
-                    </Nav>
-                    <Nav className="ms-auto my-2 my-lg-0" style={{ maxHeight: "100px" }} navbarScroll>
-                        {user.role === "guest" && (
-                            <>
-                                <Nav.Link as={Link} to="/auth/login">
-                                    <MultiLang>Log In</MultiLang>
-                                </Nav.Link>
-                                <Nav.Link as={Link} to="/auth/register">
-                                    <MultiLang>Sign Up</MultiLang>
-                                </Nav.Link>
-                            </>
-                        )}
-                        {(user.role === "user" || user.role === "hotel") && (
-                            <NavDropdown title={<BsPerson />} className="">
-                                <Nav.Link as={Link} to={`/profile/${user.userId}`}>
-                                    <MultiLang>Profile</MultiLang>
-                                </Nav.Link>
-                                <hr className="m-1 mx-2" />
-                                <NavDropdown.Item onClick={() => setJwt(null)}>
-                                    <span style={{ display: "inline-flex", alignItems: "center" }}>Log Out</span>
-                                </NavDropdown.Item>
-                            </NavDropdown>
-                        )}
+                <Navbar.Offcanvas id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="end">
+                    <Offcanvas.Header closeButton>
+                        <Offcanvas.Title id="offcanvasNavbarLabel">Menu</Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                        <Nav className="me-auto my-2 my-lg-0">
+                            <Nav.Link as={Link} to="contact">
+                                <MultiLang>Contact Us</MultiLang>
+                            </Nav.Link>
+                        </Nav>
+                        <Nav className="ms-auto my-2 my-lg-0 align-items-center d-flex justify-content-around flex-row">
+                            <Row className="w-100 align-items-center justify-content-center flex-row flex-nowrap text-nowrap">
+                                <Col className="justify-content-center d-flex ">
+                                    {!user && (
+                                        <>
+                                            <Nav.Link as={Link} to="/auth/login">
+                                                <MultiLang>Log In</MultiLang>
+                                            </Nav.Link>
+                                            <Nav.Link as={Link} to="/auth/register">
+                                                <MultiLang>Sign Up</MultiLang>
+                                            </Nav.Link>
+                                        </>
+                                    )}
 
-                        <NavDropdown title={language}>
-                            <NavDropdown.Item onClick={() => setLanguage("GEO")} hidden={language === "GEO"}>
-                                <span style={{ display: "inline-flex", alignItems: "center" }}>
-                                    ქართული{" "}
-                                    <Flag code="GE" style={{ height: "1.2rem" }} className="border rounded mx-2" />
-                                </span>
-                            </NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => setLanguage("ENG")} hidden={language === "ENG"}>
-                                <span style={{ display: "inline-flex", alignItems: "center" }}>
-                                    English{" "}
-                                    <Flag code="GB" style={{ height: "1.2rem" }} className="border rounded mx-2" />
-                                </span>
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                    </Nav>
-                </Navbar.Collapse>
+                                    {user && (
+                                        <DropdownButton
+                                            id="dropdown-item-button"
+                                            className="top-main"
+                                            title={<BsPerson />}
+                                            flip
+                                        >
+                                            {user.role === "hotel" && (
+                                                <Dropdown.Item as={Link} to={"/manage"}>
+                                                    <MultiLang>Manage Posts</MultiLang>
+                                                </Dropdown.Item>
+                                            )}
+                                            <Dropdown.Item as={Link} to={`/profile/${user.userId}`}>
+                                                <MultiLang>Profile</MultiLang>
+                                            </Dropdown.Item>
+                                            <hr className="m-1 mx-2" />
+
+                                            <Dropdown.Item as="button" onClick={() => logout()}>
+                                                <MultiLang>Log Out</MultiLang>
+                                            </Dropdown.Item>
+                                        </DropdownButton>
+                                    )}
+                                </Col>
+                                <Col className="justify-content-center d-flex">
+                                    <Flag
+                                        code={language === "GEO" ? "GB" : "GE"}
+                                        onClick={() => setLanguage(language === "GEO" ? "ENG" : "GEO")}
+                                        style={{ width: "45px", height: "fit-content" }}
+                                        className="border rounded mx-2 pointer"
+                                    />
+                                </Col>
+                            </Row>
+                        </Nav>
+                    </Offcanvas.Body>
+                </Navbar.Offcanvas>
+
+                <Navbar.Toggle aria-controls="offcanvasNavbar" />
             </Container>
         </Navbar>
     );

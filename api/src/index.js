@@ -17,7 +17,7 @@ router
 	.post('/api/getPosts', getPosts)
 	.post('/api/addPost', jwtValidation, addPost)
 	.all('*', () => new Response('Not Found', { status: 404 }));
-//fix
+
 export default {
 	fetch: router.fetch,
 };

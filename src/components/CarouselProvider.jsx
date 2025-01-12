@@ -5,7 +5,6 @@ import { LangContext } from "ds-auth-provider";
 export default function CarouselProvider({ bannerImages, height = "50vh", className }) {
     const { language } = useContext(LangContext);
     const carouselRef = useRef(null);
-    console.log(bannerImages);
 
     const handlePrev = (e) => {
         e.stopPropagation();

@@ -4,9 +4,6 @@ import Post from "../components/Post";
 
 export default function PostPage() {
     const postData = useLoaderData();
-    useEffect(() => {
-        console.log(postData);
-    }, []);
 
     return <Post postData={postData} xs={12} />;
 }

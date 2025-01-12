@@ -6,8 +6,8 @@ export default async function (request, env) {
 	if (!authHeader) {
 		return new Response('Authorization header missing');
 	}
-
-	const token = authHeader.split(' ')[1]; // Extract token from "Bearer <token>"
+	e;
+	const token = authHeader.split(' ')[1]; // Extract tokn from "Bearer <token>"
 
 	try {
 		const decoded = jwt.verify(token, env.JWT_SECRET); // Verify token

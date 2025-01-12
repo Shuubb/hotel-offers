@@ -8,6 +8,7 @@ import AddPostPage from "./pages/user/hotel/AddPostPage";
 import SettingsPage from "./pages/user/SettingsPage";
 import { jwtDecode } from "jwt-decode";
 import PostPage from "./pages/PostPage";
+import ManagePosts from "./pages/user/hotel/ManagePosts";
 const translator = {
     "Contact Us": "დაგვიკავშირდით",
     "Log In": "შესვლა",
@@ -38,6 +39,8 @@ export default createAuthBrowserRouter(
                     path: "",
                     element: <LandingPage />,
                     loader: async () => {
+                        const now = new Date().getTime();
+                        console.log(now);
                         const postsResult = await fetch("/api/getPosts", {
                             method: "POST",
                             body: JSON.stringify({
@@ -45,6 +48,9 @@ export default createAuthBrowserRouter(
                                     views: -1,
                                 },
                                 limit: 5,
+                                filter: {
+                                    exp: { $gt: now },
+                                },
                             }),
                         });
                         const bannerPostsResult = await fetch("/api/getPosts", {
@@ -55,6 +61,7 @@ export default createAuthBrowserRouter(
                                 },
                                 filter: {
                                     banner: true,
+                                    exp: { $gt: now },
                                 },
                             }),
                         });
@@ -83,34 +90,23 @@ export default createAuthBrowserRouter(
                     element: <ContactUsPage />,
                 },
                 {
+                    path: "manage",
+                    element: <ManagePosts />,
+                    access: ["hotel"],
+                },
+                {
                     path: "profile/:clientId",
                     element: <ProfilePage />,
-                    children: [
-                        {
-                            path: "addpost",
-                            element: <AddPostPage />,
-                        },
-                        {
-                            path: "settings",
-                            element: <SettingsPage />,
-                        },
-                    ],
                     loader: async ({ params }) => {
                         return { clientId: params.clientId };
                     },
                 },
+                {
+                    path: "settings",
+                    element: <SettingsPage />,
+                    access: ["user", "hotel"],
+                },
             ],
-            loader: async () => {
-                const jwt = localStorage.getItem("jwt");
-                try {
-                    const exp = jwtDecode(jwt).exp;
-                    const now = Math.floor(Date.now() / 1000);
-                    if (exp < now) throw new Error("Expired");
-                } catch {
-                    localStorage.removeItem("jwt");
-                }
-                return null;
-            },
         },
         {
             path: "*",
