@@ -28,6 +28,13 @@ const translator = {
     "Already Have An Account?": "უკვე გაქვთ ანგარიში?",
     "Forgot Password?": "დაგავიწყდათ პაროლი?",
     "Or Contact Us": "ან დაგვიკავშირდით",
+    "Manage Posts": "პოსტების მართვა",
+    Profile: "პროფილი",
+    "Log Out": "გამოსვლა",
+    Posts: "პოსტები",
+    "Add Post": "დაამატე პოსტი",
+    Settings: "პარამეტრები",
+    Preview: "მიმოხილვა",
 };
 export default createAuthBrowserRouter(
     [

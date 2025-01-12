@@ -26,7 +26,7 @@ export default function NavBar() {
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                         <Nav className="me-auto my-2 my-lg-0">
-                            <Nav.Link as={Link} to="contact">
+                            <Nav.Link as={Link} to="/contact" className="p-2">
                                 <MultiLang>Contact Us</MultiLang>
                             </Nav.Link>
                         </Nav>
@@ -35,10 +35,10 @@ export default function NavBar() {
                                 <Col className="justify-content-center d-flex ">
                                     {!user && (
                                         <>
-                                            <Nav.Link as={Link} to="/auth/login">
+                                            <Nav.Link as={Link} to="/auth/login" className="p-2">
                                                 <MultiLang>Log In</MultiLang>
                                             </Nav.Link>
-                                            <Nav.Link as={Link} to="/auth/register">
+                                            <Nav.Link as={Link} to="/auth/register" className="p-2">
                                                 <MultiLang>Sign Up</MultiLang>
                                             </Nav.Link>
                                         </>
